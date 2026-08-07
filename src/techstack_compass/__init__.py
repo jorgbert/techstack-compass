@@ -1,2 +1,1 @@
-def main() -> None:
-    print("Hello from techstack-compass!")
+"""TechStack Compass package."""
