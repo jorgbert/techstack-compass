@@ -4,6 +4,8 @@
 
 This project is an end-to-end Data Engineering and Machine Learning pipeline designed to extract tech job postings, model them as a Knowledge Graph, and predict high-value skills using Graph Neural Networks. The project is managed with uv.
 
+My local operating system is Linux Mint and my shell is Zsh. When suggesting CLI commands or terminal usage, tailor them to Zsh on Linux. However, always write Python code that is 100% cross-platform (Windows, macOS, Linux).
+
 ## Core Technologies & Rules
 
 You must strictly adhere to the following stack and conventions:
@@ -69,3 +71,10 @@ Adzuna rate limits:
 - Prefer keeping related functionality grouped by domain rather than creating ad-hoc files at the repository root.
 
 - When generating new code, follow the existing tree and avoid introducing new top-level folders unless they are clearly justified by the project architecture.
+
+## Python Coding Standards & Architecture Guidelines
+
+### 1. Configuration & Environment Variables
+- **Never use brittle relative path traversal** (e.g., `Path(__file__).parents[N]`) to locate `.env` files or project root directories.
+- Use `dotenv.find_dotenv()` to automatically locate `.env` files, or centralize all environment loading and path resolution inside a dedicated `config.py` or `settings.py` module.
+- Always decouple business logic scripts from folder structure awareness.

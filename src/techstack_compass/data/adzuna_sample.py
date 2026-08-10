@@ -2,31 +2,18 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
-from pathlib import Path
 from typing import Any
 
 import httpx
-from dotenv import load_dotenv
 
-
-def _load_credentials() -> tuple[str, str]:
-    """Load Adzuna credentials from the repository .env file."""
-    repo_root = Path(__file__).resolve().parents[3]
-    load_dotenv(repo_root / ".env")
-
-    app_id = os.getenv("APP_ID")
-    app_key = os.getenv("APP_KEY")
-    if not app_id or not app_key:
-        raise RuntimeError("Missing APP_ID or APP_KEY in .env")
-    return app_id, app_key
+from src.techstack_compass.core.config import ADZUNA_BASE_URL, get_adzuna_credentials
 
 
 def fetch_adzuna_sample(country: str, query: str, results_per_page: int = 5) -> dict[str, Any]:
     """Fetch a small sample of jobs from the Adzuna API."""
-    app_id, app_key = _load_credentials()
+    app_id, app_key = get_adzuna_credentials()
 
-    url = f"https://api.adzuna.com/v1/api/jobs/{country}/search/1"
+    url = f"{ADZUNA_BASE_URL}/jobs/{country}/search/1"
     params = {
         "app_id": app_id,
         "app_key": app_key,
