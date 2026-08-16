@@ -66,10 +66,16 @@ Adzuna rate limits:
 
 - If a new file is created in a folder such as `.venv/`, `airflow/logs/`, `dbt/target/`, `data/`, or any other runtime/cache/output directory, assume it should not be committed unless there is an explicit repo requirement and it is already intentionally tracked.
 
+- For raw source data files such as CSV exports, prefer a repository-local raw-ingestion folder at `data/raw/`, outside `src/`. These files are operational inputs, not package code, and they should not be committed to git unless the repository explicitly tracks them.
+
+- Keep cleaned or intermediate datasets in `data/processed/` or a dedicated subfolder under `data/` when they are generated during ETL. The `src/techstack_compass/data/` package should contain Python logic for loading, transforming, and validating data rather than large raw vendor dumps.
+
 ### 6. Project Structure Awareness
 
 - When creating or modifying scripts, place them in the folder that matches their responsibility:
   - Data ingestion and orchestration logic in `airflow/` or `src/techstack_compass/data/`.
+  - Raw, unfiltered import files such as job-board CSV exports go in `data/raw/` outside the package before normalization.
+  - Cleaned, transformed, or intermediate datasets, if needed, should be placed in `data/processed/` or a dedicated subfolder under `data/`.
   - dbt models and SQL logic in `dbt/models/`, with macros in `dbt/macros/` and seeds in `dbt/seeds/`.
   - API endpoints and request/response handling in `src/techstack_compass/api/`.
   - Machine learning and graph-based logic in `src/techstack_compass/ml/`.

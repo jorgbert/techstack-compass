@@ -12,6 +12,8 @@ __pycache__/
 airflow/logs/
 dbt/target/
 dbt/logs/
+data/raw/
+data/processed/
 
 # Editor state
 .vscode/
