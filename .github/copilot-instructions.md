@@ -58,6 +58,14 @@ Adzuna rate limits:
 
 - Do not suggest monolithic functions. Break logic into testable components.
 
+- Before creating or modifying any file, check whether it is something that should be committed to git or whether it is a local secret, generated artifact, cache, data output, log, environment file, or editor state. If it is local/generated, ensure it is covered by `.gitignore` and not added to version control.
+
+- Every time you create a file, first decide: does this belong to the repository or is it local/generated/sensitive output? Only commit tracked project files; do not add runtime, cache, secret, or generated files to git.
+
+- Do not add generic entries to `.gitignore` for folders or extensions that do not already exist in this project or are not clearly part of the current repo runtime. Only ignore paths that are already present or explicitly expected in this project architecture, and keep the list specific to TechStack Compass.
+
+- If a new file is created in a folder such as `.venv/`, `airflow/logs/`, `dbt/target/`, `data/`, or any other runtime/cache/output directory, assume it should not be committed unless there is an explicit repo requirement and it is already intentionally tracked.
+
 ### 6. Project Structure Awareness
 
 - When creating or modifying scripts, place them in the folder that matches their responsibility:
